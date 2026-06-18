@@ -17,3 +17,4 @@ spec:
     - kube-system
     - monitoring
     - argo-rollouts
+    - cosign-system
