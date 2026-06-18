@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: vuhoang18/flask-api-app:v0.0.1
+        image: ghcr.io/hoangvu186/w10-api:0.0.2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
