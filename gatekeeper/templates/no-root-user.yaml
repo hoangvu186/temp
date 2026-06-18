@@ -1,0 +1,24 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: norootuser
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  crd:
+    spec:
+      names:
+        kind: NoRootUser
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package norootuser
+      violation[{"msg": msg}] {
+        input.review.object.spec.securityContext.runAsUser == 0
+        msg := "C?m ch?y container v?i runAsUser: 0 (root)"
+      }
+      violation[{"msg": msg}] {
+        container := input.review.object.spec.containers[_]
+        container.securityContext.runAsUser == 0
+        msg := sprintf("Container '%v' b? c?m runAsUser: 0", [container.name])
+      }

@@ -1,0 +1,25 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: nolatesttag
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  crd:
+    spec:
+      names:
+        kind: NoLatestTag
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package nolatesttag
+      violation[{"msg": msg}] {
+        container := input.review.object.spec.containers[_]
+        endswith(container.image, ":latest")
+        msg := sprintf("Image '%v' dùng tag :latest b? c?m", [container.image])
+      }
+      violation[{"msg": msg}] {
+        container := input.review.object.spec.containers[_]
+        not contains(container.image, ":")
+        msg := sprintf("Image '%v' không có tag b? c?m", [container.image])
+      }
