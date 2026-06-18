@@ -1,0 +1,17 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: requireownerlab el
+spec:
+  crd:
+    spec:
+      names:
+        kind: RequireOwnerLabel
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package requireownerlabel
+      violation[{"msg": msg}] {
+        not input.review.object.metadata.labels.owner
+        msg := "Workload phai co label 'owner'"
+      }
