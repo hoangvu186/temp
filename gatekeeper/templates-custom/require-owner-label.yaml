@@ -1,7 +1,7 @@
 apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
-  name: requireownerlab el
+  name: requireownerlabel
 spec:
   crd:
     spec:
