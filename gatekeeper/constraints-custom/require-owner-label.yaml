@@ -10,3 +10,10 @@ spec:
       kinds: ["Pod"]
     - apiGroups: ["apps"]
       kinds: ["Deployment"]
+    excludedNamespaces:
+    - external-secrets
+    - gatekeeper-system
+    - argocd
+    - kube-system
+    - monitoring
+    - argo-rollouts
