@@ -18,6 +18,7 @@ spec:
     metadata:
       labels:
         app: api
+        owner: hoangvu186
     spec:
       containers:
       - name: api
@@ -42,6 +43,9 @@ spec:
             port: 8080
           initialDelaySeconds: 3
         resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
           limits:
             cpu: 200m
             memory: 128Mi
