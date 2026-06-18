@@ -1,0 +1,34 @@
+# rbac/roles.yaml
+
+# --- alice: developer, chỉ ns demo ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+  namespace: demo
+rules:
+- apiGroups: ["", "apps"]
+  resources: ["deployments", "pods", "services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+# --- bob: sre, thao tác pod toàn cụm ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sre
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "exec"]
+
+---
+# --- carol: viewer, chỉ đọc toàn cụm ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: viewer
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]   # KHÔNG có create/delete
